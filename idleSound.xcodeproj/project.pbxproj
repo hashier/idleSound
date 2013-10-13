@@ -18,6 +18,8 @@
 		00CAD4EB18070FC1006EA60E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CAD4CA18070FC1006EA60E /* Cocoa.framework */; };
 		00CAD4F318070FC1006EA60E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00CAD4F118070FC1006EA60E /* InfoPlist.strings */; };
 		00CAD4F518070FC1006EA60E /* idleSoundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CAD4F418070FC1006EA60E /* idleSoundTests.m */; };
+		00E2F4D6180B260800C73397 /* HASVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E2F4D5180B260800C73397 /* HASVolumeControl.m */; };
+		00E2F4D8180B2E4300C73397 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00E2F4D7180B2E4300C73397 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		00CAD4F018070FC1006EA60E /* idleSoundTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "idleSoundTests-Info.plist"; sourceTree = "<group>"; };
 		00CAD4F218070FC1006EA60E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00CAD4F418070FC1006EA60E /* idleSoundTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = idleSoundTests.m; sourceTree = "<group>"; };
+		00E2F4D4180B260800C73397 /* HASVolumeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HASVolumeControl.h; sourceTree = "<group>"; };
+		00E2F4D5180B260800C73397 /* HASVolumeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HASVolumeControl.m; sourceTree = "<group>"; };
+		00E2F4D7180B2E4300C73397 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00E2F4D8180B2E4300C73397 /* AudioToolbox.framework in Frameworks */,
 				00CAD4CB18070FC1006EA60E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +101,7 @@
 		00CAD4C918070FC1006EA60E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00E2F4D7180B2E4300C73397 /* AudioToolbox.framework */,
 				00CAD4CA18070FC1006EA60E /* Cocoa.framework */,
 				00CAD4E918070FC1006EA60E /* XCTest.framework */,
 				00CAD4CC18070FC1006EA60E /* Other Frameworks */,
@@ -115,6 +122,8 @@
 		00CAD4D018070FC1006EA60E /* idleSound */ = {
 			isa = PBXGroup;
 			children = (
+				00E2F4D4180B260800C73397 /* HASVolumeControl.h */,
+				00E2F4D5180B260800C73397 /* HASVolumeControl.m */,
 				00CAD4DC18070FC1006EA60E /* AppDelegate.h */,
 				00CAD4DD18070FC1006EA60E /* AppDelegate.m */,
 				00CAD4DF18070FC1006EA60E /* MainMenu.xib */,
@@ -252,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00E2F4D6180B260800C73397 /* HASVolumeControl.m in Sources */,
 				00CAD4DE18070FC1006EA60E /* AppDelegate.m in Sources */,
 				00CAD4D718070FC1006EA60E /* main.m in Sources */,
 			);
@@ -464,6 +474,7 @@
 				00CAD4FA18070FC1006EA60E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00CAD4FB18070FC1006EA60E /* Build configuration list for PBXNativeTarget "idleSoundTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +483,7 @@
 				00CAD4FD18070FC1006EA60E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

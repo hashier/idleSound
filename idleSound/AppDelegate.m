@@ -7,12 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "HASVolumeControl.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    NSLog(@"Vol: %f", [HASVolumeControl volume]);
+    [HASVolumeControl setVolume:0.2];
+    NSLog(@"Vol: %f", [HASVolumeControl volume]);
 }
 
 @end
