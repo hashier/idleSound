@@ -153,10 +153,10 @@
     propertyAOPA.mScope = kAudioDevicePropertyScopeOutput;
     
     if (newVolume < 0.001) {
-        NSLog(@"Requested mute");
+//        NSLog(@"Requested mute");
         propertyAOPA.mSelector = kAudioDevicePropertyMute;
     } else {
-        NSLog(@"Requested volume %.2f", newVolume);
+//        NSLog(@"Requested volume %.2f", newVolume);
         propertyAOPA.mSelector = kAudioHardwareServiceDeviceProperty_VirtualMasterVolume;
     }
     

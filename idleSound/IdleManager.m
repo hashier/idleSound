@@ -9,8 +9,8 @@
 #import "IdleManager.h"
 #import "Notifications.h"
 
-#define MACHINE_IDLE_THRESHOLD			10    // 1800 seconds of inactivity is considered idle
-#define MACHINE_ACTIVE_POLL_INTERVAL      3    // Poll every 30 seconds when the user is active
+#define MACHINE_IDLE_THRESHOLD			1800    // 1800 seconds of inactivity is considered idle
+#define MACHINE_ACTIVE_POLL_INTERVAL      30    // Poll every 30 seconds when the user is active
 #define MACHINE_IDLE_POLL_INTERVAL         1    // Poll every second when the user is idle
 
 @interface IdleManager ()

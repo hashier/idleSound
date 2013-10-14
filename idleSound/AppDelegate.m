@@ -14,29 +14,52 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) IdleManager *idleManager;
-@property (nonatomic, strong) NSStatusItem* statusItem;
+// properties
+@property (strong, nonatomic) IdleManager *idleManager;
+@property (strong, nonatomic) NSStatusItem* statusItem;
 @property (assign, nonatomic) BOOL wasMutedBefore;
+
+// outlets
+@property (weak) IBOutlet NSMenu *statusItemMenu;
+@property (weak) IBOutlet NSMenuItem *quit;
 
 @end
 
 @implementation AppDelegate
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+//    http://stackoverflow.com/a/8401132/1953914
+//    In application xib, select the window object, and you will see "Visible at Launch" in Attributes Inspector.
+    _window.isVisible = NO;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self setupMenuBarItem];
     self.idleManager = [[IdleManager alloc] init];
+    
+    [self setupMenuBarItem];
     [self registerObserver];
+    [self language];
 }
+
+#pragma mark - Layout
 
 - (void)setupMenuBarItem {
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     self.statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
     
     [self.statusItem setTitle:NSLocalizedString(@"S", @"Title of idleSound")];
-    //    [self.statusItem setMenu:self.statusItemMenu];
+    [self.statusItem setMenu:self.statusItemMenu];
     [self.statusItem setHighlightMode:YES];
 }
+
+#pragma mark - Translations
+
+- (void)language {
+    self.quit.title = NSLocalizedString(@"Quit", @"Click to quit the app");
+}
+
+#pragma mark Notification
 
 - (void)registerObserver {
     NSNotificationCenter *notificationCenter;
@@ -82,6 +105,36 @@
             [HASVolumeControl unMuted];
         }
     }
+}
+
+#pragma mark - MenuItems
+
+- (IBAction)quit:(id)sender {
+    [NSApp terminate:self];
+}
+
+- (IBAction)about:(id)sender {
+    NSString *appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *versionBuildString = [NSString stringWithFormat:@"Version: %@ (%@)", appVersionString, appBuildString];
+	NSString *msg = [NSString stringWithFormat:@"%@ %@ %@", @"idleSound\n\nidleSound is free and open source software which automatically mutes your Mac after a specified time.", @"\n\nCopyright (C) 2013 Christopher Loessl\n\n", versionBuildString];
+	NSAlert *alert = [NSAlert alertWithMessageText:msg
+									 defaultButton:@"Close"
+								   alternateButton:@"Source Code and Bugtracker"
+									   otherButton:nil
+						 informativeTextWithFormat:@""];
+    
+	if ([alert runModal] == NSAlertAlternateReturn) {
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://loessl.org"]];
+	}
+}
+
+- (IBAction)default:(id)sender {
+    self.idleManager.machineIdleThreshold = 1800;
+}
+
+- (IBAction)test:(id)sender {
+    self.idleManager.machineIdleThreshold = 30;
 }
 
 @end

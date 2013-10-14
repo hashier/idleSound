@@ -21,9 +21,11 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>0005</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2013 Christopher Loessl. All rights reserved.</string>
 	<key>NSMainNibFile</key>

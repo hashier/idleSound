@@ -182,6 +182,7 @@
 				00CAD4C318070FC0006EA60E /* Sources */,
 				00CAD4C418070FC0006EA60E /* Frameworks */,
 				00CAD4C518070FC0006EA60E /* Resources */,
+				007C61A6180BA4E200815FE0 /* Run Script (build inc.) */,
 			);
 			buildRules = (
 			);
@@ -264,6 +265,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		007C61A6180BA4E200815FE0 /* Run Script (build inc.) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script (build inc.)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(echo $buildNumber | sed 's/0*//')\nbuildNumber=$(($buildNumber + 1))\nbuildNumber=$(printf \"%04d\" $buildNumber)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		00CAD4C318070FC0006EA60E /* Sources */ = {
