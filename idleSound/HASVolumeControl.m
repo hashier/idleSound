@@ -16,6 +16,60 @@
 
 #pragma mark - New API
 
++ (bool)isMuted {
+    UInt32 propertySize = 0;
+    OSStatus status = noErr;
+    AudioObjectPropertyAddress propertyAOPA;
+    propertyAOPA.mElement = kAudioObjectPropertyElementMaster;
+    propertyAOPA.mScope = kAudioDevicePropertyScopeOutput;
+    propertyAOPA.mSelector = kAudioDevicePropertyMute;
+    
+    AudioDeviceID outputDeviceID = [[self class] defaultOutputDeviceID];
+    propertySize = sizeof(Float32);
+    UInt32 mute;
+
+    status = AudioHardwareServiceGetPropertyData(outputDeviceID, &propertyAOPA, 0, NULL, &propertySize, &mute);
+    
+    if (status) {
+        NSLog(@"Can't get mute information for dev: 0x%0x", outputDeviceID);
+    }
+    
+    return mute;
+}
+
++ (void)unMuted {
+    UInt32 propertySize = 0;
+    OSStatus status = noErr;
+    AudioObjectPropertyAddress propertyAOPA;
+    propertyAOPA.mElement = kAudioObjectPropertyElementMaster;
+    propertyAOPA.mScope = kAudioDevicePropertyScopeOutput;
+    propertyAOPA.mSelector = kAudioDevicePropertyMute;
+    
+    AudioDeviceID outputDeviceID = [[self class] defaultOutputDeviceID];
+    propertySize = sizeof(Float32);
+    UInt32 mute = 0;
+    
+    if (!AudioHardwareServiceHasProperty(outputDeviceID, &propertyAOPA)) {
+        NSLog(@"Device 0x%0x does not support muting", outputDeviceID);
+        return;
+    }
+    
+    Boolean canSetMute = NO;
+    
+    status = AudioHardwareServiceIsPropertySettable(outputDeviceID, &propertyAOPA, &canSetMute);
+    
+    if (status || !canSetMute) {
+        NSLog(@"Device 0x%0x does not support muting", outputDeviceID);
+        return;
+    }
+    
+    status = AudioHardwareServiceSetPropertyData(outputDeviceID, &propertyAOPA, 0, NULL, propertySize, &mute);
+    
+    if (status) {
+        NSLog(@"Unable to set volume for device 0x%0x", outputDeviceID);
+    }
+}
+
 // getting system volume
 + (float)volume {
     Float32 outputVolume;
@@ -80,10 +134,15 @@
     return outputDeviceID;
 }
 
++ (void)setMute {
+    [[self class] setVolume:0.0];
+}
+
 // setting system volume - mutes if under threshhold
 + (void)setVolume:(Float32)newVolume {
     if (newVolume < 0.0 || newVolume > 1.0) {
-        NSLog(@"Requested volume out of range (%.2f)", newVolume); return;
+        NSLog(@"Requested volume out of range (%.2f)", newVolume);
+        return;
     }
     
     // get output device device

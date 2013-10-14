@@ -1,5 +1,5 @@
 //
-//  HASVolumeControl.h
+//  IdleManager.h
 //  idleSound
 //
 //  Created by Christopher Loessl on 10/13/13.
@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HASVolumeControl : NSObject
+@interface IdleManager : NSObject
 
-+ (float)volume;
-+ (void)setVolume:(Float32)newVolume;
-+ (void)setMute;
-+ (bool)isMuted;
-+ (void)unMuted;
+// properties
+@property (assign, nonatomic) NSUInteger machineIdleThreshold; // default 30min
+
+// public methods
+- (id)init;
 
 @end

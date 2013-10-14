@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00A52001180B3F9B0051E0C8 /* IdleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A52000180B3F9B0051E0C8 /* IdleManager.m */; };
 		00CAD4CB18070FC1006EA60E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CAD4CA18070FC1006EA60E /* Cocoa.framework */; };
 		00CAD4D518070FC1006EA60E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00CAD4D318070FC1006EA60E /* InfoPlist.strings */; };
 		00CAD4D718070FC1006EA60E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CAD4D618070FC1006EA60E /* main.m */; };
@@ -33,6 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00A51FFD180B37E10051E0C8 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		00A51FFE180B384E0051E0C8 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		00A51FFF180B3F9B0051E0C8 /* IdleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdleManager.h; sourceTree = "<group>"; };
+		00A52000180B3F9B0051E0C8 /* IdleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdleManager.m; sourceTree = "<group>"; };
 		00CAD4C718070FC1006EA60E /* idleSound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = idleSound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CAD4CA18070FC1006EA60E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		00CAD4CD18070FC1006EA60E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -124,6 +129,8 @@
 			children = (
 				00E2F4D4180B260800C73397 /* HASVolumeControl.h */,
 				00E2F4D5180B260800C73397 /* HASVolumeControl.m */,
+				00A51FFF180B3F9B0051E0C8 /* IdleManager.h */,
+				00A52000180B3F9B0051E0C8 /* IdleManager.m */,
 				00CAD4DC18070FC1006EA60E /* AppDelegate.h */,
 				00CAD4DD18070FC1006EA60E /* AppDelegate.m */,
 				00CAD4DF18070FC1006EA60E /* MainMenu.xib */,
@@ -136,6 +143,8 @@
 		00CAD4D118070FC1006EA60E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				00A51FFD180B37E10051E0C8 /* Notifications.h */,
+				00A51FFE180B384E0051E0C8 /* common.h */,
 				00CAD4D218070FC1006EA60E /* idleSound-Info.plist */,
 				00CAD4D318070FC1006EA60E /* InfoPlist.strings */,
 				00CAD4D618070FC1006EA60E /* main.m */,
@@ -262,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E2F4D6180B260800C73397 /* HASVolumeControl.m in Sources */,
+				00A52001180B3F9B0051E0C8 /* IdleManager.m in Sources */,
 				00CAD4DE18070FC1006EA60E /* AppDelegate.m in Sources */,
 				00CAD4D718070FC1006EA60E /* main.m in Sources */,
 			);
