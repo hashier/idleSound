@@ -36,7 +36,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.idleManager = [[IdleManager alloc] init];
-    
     [self setupMenuBarItem];
     [self registerObserver];
     [self language];
@@ -47,7 +46,6 @@
 - (void)setupMenuBarItem {
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     self.statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    
     [self.statusItem setTitle:NSLocalizedString(@"S", @"Title of idleSound")];
     [self.statusItem setMenu:self.statusItemMenu];
     [self.statusItem setHighlightMode:YES];
@@ -59,7 +57,7 @@
     self.quit.title = NSLocalizedString(@"Quit", @"Click to quit the app");
 }
 
-#pragma mark Notification
+#pragma mark - Notification
 
 - (void)registerObserver {
     NSNotificationCenter *notificationCenter;

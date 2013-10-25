@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Christopher Loessl. All rights reserved.
 //
 
+// Used AdiumIdleManager as basis for this class
+// https://hg.adium.im/adium/file/8f48d8e917b5/Source/AdiumIdleManager.m
+
 #import "IdleManager.h"
 #import "Notifications.h"
 
@@ -21,10 +24,10 @@
 @end
 
 /*!
- * @class AdiumIdleManager
+ * @class IdleManager
  * @brief Core class to manage sending notifications when the system is idle or no longer idle
  *
- * Posts AIMachineIsIdleNotification to adium's notification center when the machine becomes idle.
+ * Posts AIMachineIsIdleNotification to notification center when the machine becomes idle.
  * Posts AIMachineIsActiveNotification when the machine is no longer idle
  * Posts AIMachineIdleUpdateNotification periodically while idle with an NSDictionary userInfo
  *      containing an NSNumber double value @"Duration" (a CFTimeInterval) and an NSDate @"idleSince".
@@ -61,7 +64,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsActiveNotification object:nil];
     }
     
-    //Update our timer interval for either idle or active polling
+    // Update our timer interval for either idle or active polling
     [self.idleTimer invalidate];
     self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
                                                       target:self
@@ -122,6 +125,5 @@
     
     self.lastSeenIdle = currentIdle;
 }
-
 
 @end

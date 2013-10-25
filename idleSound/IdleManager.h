@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Christopher Loessl. All rights reserved.
 //
 
+// Used AdiumIdleManager as basis for this class
+// https://hg.adium.im/adium/file/8f48d8e917b5/Source/AdiumIdleManager.m
+
 #import <Foundation/Foundation.h>
 
 @interface IdleManager : NSObject
