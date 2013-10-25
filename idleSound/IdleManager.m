@@ -9,7 +9,7 @@
 #import "IdleManager.h"
 #import "Notifications.h"
 
-#define MACHINE_IDLE_THRESHOLD			1800    // 1800 seconds of inactivity is considered idle
+#define MACHINE_IDLE_THRESHOLD          1800    // 1800 seconds of inactivity is considered idle
 #define MACHINE_ACTIVE_POLL_INTERVAL      30    // Poll every 30 seconds when the user is active
 #define MACHINE_IDLE_POLL_INTERVAL         1    // Poll every second when the user is idle
 
@@ -27,7 +27,7 @@
  * Posts AIMachineIsIdleNotification to adium's notification center when the machine becomes idle.
  * Posts AIMachineIsActiveNotification when the machine is no longer idle
  * Posts AIMachineIdleUpdateNotification periodically while idle with an NSDictionary userInfo
- *		containing an NSNumber double value @"Duration" (a CFTimeInterval) and an NSDate @"idleSince".
+ *      containing an NSNumber double value @"Duration" (a CFTimeInterval) and an NSDate @"idleSince".
  */
 @implementation IdleManager
 
@@ -52,18 +52,18 @@
  */
 - (void)setMachineIsIdle:(BOOL)inIdle
 {
-	_machineIsIdle = inIdle;
-	
-	//Post the appropriate idle or active notification
-	if (_machineIsIdle) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsIdleNotification object:nil];
-	} else {
-		[[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsActiveNotification object:nil];
-	}
-	
-	//Update our timer interval for either idle or active polling
-	[self.idleTimer invalidate];
-	self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
+    _machineIsIdle = inIdle;
+    
+    //Post the appropriate idle or active notification
+    if (_machineIsIdle) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsIdleNotification object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsActiveNotification object:nil];
+    }
+    
+    //Update our timer interval for either idle or active polling
+    [self.idleTimer invalidate];
+    self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
                                                       target:self
                                                     selector:@selector(idleCheckTimer:)
                                                     userInfo:nil
@@ -96,31 +96,31 @@
  * returns.
  */
 - (void)idleCheckTimer:(NSTimer *)inTimer {
-	CFTimeInterval currentIdle = [self currentMachineIdle];
+    CFTimeInterval currentIdle = [self currentMachineIdle];
     
-	if (self.machineIsIdle) {
-		if (currentIdle < self.lastSeenIdle) {
+    if (self.machineIsIdle) {
+        if (currentIdle < self.lastSeenIdle) {
             // User came back
-			self.machineIsIdle = NO;
-		} else {
+            self.machineIsIdle = NO;
+        } else {
             // User still idle
-			// Periodically broadcast a 'MachineIdleUpdate' notification
-			[[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIdleUpdateNotification
+            // Periodically broadcast a 'MachineIdleUpdate' notification
+            [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIdleUpdateNotification
                                                                 object:nil
                                                               userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                         [NSNumber numberWithDouble:currentIdle], kIdleFor,
                                                                         [NSDate dateWithTimeIntervalSinceNow:-currentIdle], kIdleSince,
                                                                         nil]];
-		}
-	} else {
+        }
+    } else {
         // User went idle
-		// If machine inactivity is over the threshold, the user has gone idle.
-		if (currentIdle > self.machineIdleThreshold) {
+        // If machine inactivity is over the threshold, the user has gone idle.
+        if (currentIdle > self.machineIdleThreshold) {
             self.machineIsIdle = YES;
         }
-	}
-	
-	self.lastSeenIdle = currentIdle;
+    }
+    
+    self.lastSeenIdle = currentIdle;
 }
 
 
