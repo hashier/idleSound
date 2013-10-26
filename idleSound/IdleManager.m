@@ -41,36 +41,36 @@
     if (self = [super init]) {
         self.machineIdleThreshold = MACHINE_IDLE_THRESHOLD;
         self.machineIsIdle = NO;
+        
+        // Register our notifications
+        NSNotificationCenter *notificationCenter;
+        
+        // Screensaver events are distributed notification events
+        notificationCenter = [NSDistributedNotificationCenter defaultCenter];
+        
+        [notificationCenter addObserver:self
+                               selector:@selector(screenStateDidChange:)
+                                   name:AIScreensaverDidStartNotification
+                                 object:nil];
+        
+        [notificationCenter addObserver:self
+                               selector:@selector(screenStateDidChange:)
+                                   name:AIScreensaverDidStopNotification
+                                 object:nil];
+        
+        [notificationCenter addObserver:self
+                               selector:@selector(screenStateDidChange:)
+                                   name:AIScreenLockDidStartNotification
+                                 object:nil];
+        
+        [notificationCenter addObserver:self
+                               selector:@selector(screenStateDidChange:)
+                                   name:AIScreenLockDidStopNotification
+                                 object:nil];
+        
     }
     
     return self;
-}
-
-/*!
- * @brief Sets the machine as idle or not
- *
- * This internal method updates the frequency of our idle timer depending on whether the machine is considered
- * idle or not.  It also posts the AIMachineIsIdleNotification and AIMachineIsActiveNotification notifications
- * based on the passed idle state
- */
-- (void)setMachineIsIdle:(BOOL)inIdle
-{
-    _machineIsIdle = inIdle;
-    
-    //Post the appropriate idle or active notification
-    if (_machineIsIdle) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsIdleNotification object:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsActiveNotification object:nil];
-    }
-    
-    // Update our timer interval for either idle or active polling
-    [self.idleTimer invalidate];
-    self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
-                                                      target:self
-                                                    selector:@selector(idleCheckTimer:)
-                                                    userInfo:nil
-                                                     repeats:YES];
 }
 
 /*!
@@ -124,6 +124,55 @@
     }
     
     self.lastSeenIdle = currentIdle;
+}
+
+/*!
+ * @brief Sets the machine as idle or not
+ *
+ * This internal method updates the frequency of our idle timer depending on whether the machine is considered
+ * idle or not.  It also posts the AIMachineIsIdleNotification and AIMachineIsActiveNotification notifications
+ * based on the passed idle state
+ */
+- (void)setMachineIsIdle:(BOOL)inIdle
+{
+    _machineIsIdle = inIdle;
+    
+    //Post the appropriate idle or active notification
+    if (_machineIsIdle) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsIdleNotification object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIsActiveNotification object:nil];
+    }
+    
+    // Update our timer interval for either idle or active polling
+    [self.idleTimer invalidate];
+    self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
+                                                      target:self
+                                                    selector:@selector(idleCheckTimer:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+}
+
+/**
+ *  @brief Called when the screen state changes
+ *
+ *  @param notification the notification sent
+ *
+ *  Gets called whenever the screen saver starts/stops or the
+ *  screen lock starts/stops. We set ourself accordingly.
+ */
+- (void)screenStateDidChange:(NSNotification *)notification {
+    NSString *notificationName = [notification name];
+    
+    if ([notificationName isEqualToString:AIScreensaverDidStartNotification]) {
+        [self setMachineIsIdle:YES];
+    } else if ([notificationName isEqualToString:AIScreensaverDidStopNotification]) {
+        [self setMachineIsIdle:NO];
+    } else if ([notificationName isEqualToString:AIScreenLockDidStartNotification]) {
+        [self setMachineIsIdle:YES];
+    } else if ([notificationName isEqualToString:AIScreenLockDidStopNotification]) {
+        [self setMachineIsIdle:NO];
+    }
 }
 
 @end
