@@ -12,8 +12,8 @@
 
 + (float)volume;
 + (void)setVolume:(Float32)newVolume;
-+ (void)setMute;
 + (bool)isMuted;
-+ (void)unMuted;
++ (void)mute;
++ (void)unmute;
 
 @end

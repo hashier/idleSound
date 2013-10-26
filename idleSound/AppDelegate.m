@@ -87,7 +87,7 @@
         NSLog(@"Machine is idle");
         self.wasMutedBefore = [HASVolumeControl isMuted];
         if (!self.wasMutedBefore) {
-            [HASVolumeControl setMute];
+            [HASVolumeControl mute];
         }
     }
     
@@ -100,7 +100,7 @@
 	if ([notificationName isEqualToString:AIMachineIsActiveNotification]) {
         NSLog(@"Machine is not idle any longer");
         if (!self.wasMutedBefore) {
-            [HASVolumeControl unMuted];
+            [HASVolumeControl unmute];
         }
     }
 }
