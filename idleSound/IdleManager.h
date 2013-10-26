@@ -18,5 +18,9 @@
 
 // public methods
 - (id)init;
+- (void)disable;
+- (void)enable;
+- (void)monitorScreenChanges;
+- (void)stopMonitoringScreenChanges;
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -661,22 +661,41 @@
             <connections>
                 <outlet property="quit" destination="rPT-EG-XLy" id="kgc-wE-ibQ"/>
                 <outlet property="statusItemMenu" destination="Wee-vz-hS2" id="YdL-lW-tJR"/>
+                <outlet property="thirtyMenuItem" destination="xY7-dc-FLu" id="QnP-tc-fYq"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
         <menu id="Wee-vz-hS2">
             <items>
-                <menuItem title="30min" id="xY7-dc-FLu">
+                <menuItem title="60 min." id="9pP-sA-SKz">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="default:" target="494" id="YDK-qa-YnB"/>
+                        <action selector="sixty:" target="494" id="mPA-R2-Qyc"/>
                     </connections>
                 </menuItem>
-                <menuItem title="30sek" id="zsF-bR-Th3">
+                <menuItem title="30 min." id="xY7-dc-FLu">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="test:" target="494" id="ZwS-Cm-OpL"/>
+                        <action selector="thirty:" target="494" id="MzL-OX-uCe"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="15 min." id="zsF-bR-Th3">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="fifteen:" target="494" id="vUq-cR-ZhD"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="  5 min." id="08B-MK-lvL">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="five:" target="494" id="YiH-Lv-RSk"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Off" id="tcc-Hu-CP4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="noTime:" target="494" id="FTe-sw-3Qs"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Q0O-df-VNR"/>

@@ -41,33 +41,6 @@
     if (self = [super init]) {
         self.machineIdleThreshold = MACHINE_IDLE_THRESHOLD;
         self.machineIsIdle = NO;
-        
-        // Register our notifications
-        NSNotificationCenter *notificationCenter;
-        
-        // Screensaver events are distributed notification events
-        notificationCenter = [NSDistributedNotificationCenter defaultCenter];
-        
-        [notificationCenter addObserver:self
-                               selector:@selector(screenStateDidChange:)
-                                   name:AIScreensaverDidStartNotification
-                                 object:nil];
-        
-        [notificationCenter addObserver:self
-                               selector:@selector(screenStateDidChange:)
-                                   name:AIScreensaverDidStopNotification
-                                 object:nil];
-        
-        [notificationCenter addObserver:self
-                               selector:@selector(screenStateDidChange:)
-                                   name:AIScreenLockDidStartNotification
-                                 object:nil];
-        
-        [notificationCenter addObserver:self
-                               selector:@selector(screenStateDidChange:)
-                                   name:AIScreenLockDidStopNotification
-                                 object:nil];
-        
     }
     
     return self;
@@ -153,6 +126,26 @@
                                                      repeats:YES];
 }
 
+- (void)disable {
+    [self.idleTimer invalidate];
+    [self stopMonitoringScreenChanges];
+}
+
+- (void)setMachineIdleThreshold:(NSUInteger)machineIdleThreshold {
+    _machineIdleThreshold = machineIdleThreshold;
+    
+    // make sure that every event gets only observed once
+    [self stopMonitoringScreenChanges];
+    [self enable];
+}
+
+- (void)enable {
+    self.machineIsIdle = NO;
+    [self monitorScreenChanges];
+}
+
+#pragma mark - Notifications and Observer
+
 /**
  *  @brief Called when the screen state changes
  *
@@ -165,14 +158,53 @@
     NSString *notificationName = [notification name];
     
     if ([notificationName isEqualToString:AIScreensaverDidStartNotification]) {
-        [self setMachineIsIdle:YES];
+        self.machineIsIdle = YES;
     } else if ([notificationName isEqualToString:AIScreensaverDidStopNotification]) {
-        [self setMachineIsIdle:NO];
+        self.machineIsIdle = NO;
     } else if ([notificationName isEqualToString:AIScreenLockDidStartNotification]) {
-        [self setMachineIsIdle:YES];
+        self.machineIsIdle = YES;
     } else if ([notificationName isEqualToString:AIScreenLockDidStopNotification]) {
-        [self setMachineIsIdle:NO];
+        self.machineIsIdle = NO;
     }
+}
+
+- (void)monitorScreenChanges {
+    // Register our notifications
+    NSNotificationCenter *notificationCenter;
+    
+    // Screensaver events are _distributed_ notification events
+    notificationCenter = [NSDistributedNotificationCenter defaultCenter];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(screenStateDidChange:)
+                               name:AIScreensaverDidStartNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(screenStateDidChange:)
+                               name:AIScreensaverDidStopNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(screenStateDidChange:)
+                               name:AIScreenLockDidStartNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(screenStateDidChange:)
+                               name:AIScreenLockDidStopNotification
+                             object:nil];
+}
+
+- (void)stopMonitoringScreenChanges {
+    // Screensaver events are _distributed_ notification events
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - dealloc
+
+-(void) dealloc {
+    [self stopMonitoringScreenChanges];
 }
 
 @end

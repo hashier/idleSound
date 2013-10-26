@@ -18,6 +18,8 @@
 @property (strong, nonatomic) IdleManager *idleManager;
 @property (strong, nonatomic) NSStatusItem* statusItem;
 @property (assign, nonatomic) BOOL wasMutedBefore;
+@property (strong, nonatomic) NSMenuItem *activeMenuItem;
+@property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
 
 // outlets
 @property (weak) IBOutlet NSMenu *statusItemMenu;
@@ -36,6 +38,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.idleManager = [[IdleManager alloc] init];
+    [self thirty:self.thirtyMenuItem];
     [self setupMenuBarItem];
     [self registerObserver];
     [self language];
@@ -125,12 +128,39 @@
 	}
 }
 
-- (IBAction)default:(id)sender {
-    self.idleManager.machineIdleThreshold = 1800;
+- (IBAction)sixty:(NSMenuItem *)sender {
+    self.idleManager.machineIdleThreshold = 3600;
+    [sender setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = sender;
 }
 
-- (IBAction)test:(id)sender {
-    self.idleManager.machineIdleThreshold = 30;
+- (IBAction)thirty:(NSMenuItem *)sender {
+    self.idleManager.machineIdleThreshold = 1800;
+    [sender setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = sender;
+}
+
+- (IBAction)fifteen:(NSMenuItem *)sender {
+    self.idleManager.machineIdleThreshold = 900;
+    [sender setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = sender;
+}
+
+- (IBAction)five:(NSMenuItem *)sender {
+    self.idleManager.machineIdleThreshold = 300;
+    [sender setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = sender;
+}
+
+- (IBAction)noTime:(NSMenuItem *)sender {
+    [self.idleManager stopMonitoringScreenChanges];
+    [sender setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = sender;
 }
 
 @end
