@@ -4,6 +4,11 @@ idleSound
 Automatically mute your Mac when it becomes idle.
 
 
+Screen Shot
+===========
+![Screen Shot](https://raw.github.com/hashier/idleSound/master/ScreenShot.png)
+
+
 Known issues
 ============
 
