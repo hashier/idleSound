@@ -194,6 +194,13 @@
                            selector:@selector(screenStateDidChange:)
                                name:AIScreenLockDidStopNotification
                              object:nil];
+
+#ifdef DEBUG
+    [notificationCenter addObserver:self
+                           selector:@selector(observerMethod:)
+                               name:nil
+                             object:nil];
+#endif
 }
 
 - (void)stopMonitoringScreenChanges {
@@ -206,5 +213,14 @@
 -(void) dealloc {
     [self stopMonitoringScreenChanges];
 }
+
+#pragma mark - DEBUG
+
+#ifdef DEBUG
+- (void)observerMethod:(NSNotification *)notification
+{
+    NSLog(@"%@",[notification name]);
+}
+#endif
 
 @end
