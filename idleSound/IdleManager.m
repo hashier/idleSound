@@ -21,6 +21,7 @@
 @property (assign, nonatomic) BOOL machineIsIdle;
 @property (assign, nonatomic) CFTimeInterval lastSeenIdle;
 @property (strong, nonatomic) NSTimer *idleTimer;
+@property (assign, nonatomic) BOOL screenStateIdle;
 @end
 
 /*!
@@ -39,8 +40,8 @@
  */
 - (id)init {
     if (self = [super init]) {
+        self.screenStateIdle = YES;
         self.machineIdleThreshold = MACHINE_IDLE_THRESHOLD;
-        self.machineIsIdle = NO;
     }
     
     return self;
@@ -126,22 +127,29 @@
                                                      repeats:YES];
 }
 
-- (void)disable {
+- (void)disable
+{
     [self.idleTimer invalidate];
-    [self stopMonitoringScreenChanges];
+    if (self.screenStateIdle) {
+        [self stopMonitoringScreenChanges];
+    }
 }
 
-- (void)setMachineIdleThreshold:(NSUInteger)machineIdleThreshold {
+- (void)enable
+{
+    if (self.screenStateIdle) {
+        // make sure that every event gets only observed once
+        [self stopMonitoringScreenChanges];
+        [self monitorScreenChanges];
+    }
+    self.machineIsIdle = NO;
+}
+
+- (void)setMachineIdleThreshold:(NSUInteger)machineIdleThreshold
+{
     _machineIdleThreshold = machineIdleThreshold;
     
-    // make sure that every event gets only observed once
-    [self stopMonitoringScreenChanges];
     [self enable];
-}
-
-- (void)enable {
-    self.machineIsIdle = NO;
-    [self monitorScreenChanges];
 }
 
 #pragma mark - Notifications and Observer
@@ -196,6 +204,7 @@
                              object:nil];
 
 #ifdef DEBUG
+    // observ ALL notifications
     [notificationCenter addObserver:self
                            selector:@selector(observerMethod:)
                                name:nil
@@ -203,9 +212,31 @@
 #endif
 }
 
+- (void)activateScreenSateIdle
+{
+    self.screenStateIdle = YES;
+    [self stopMonitoringScreenChanges];
+    [self monitorScreenChanges];
+}
+
+- (void)disableScreenSateIdle
+{
+    self.screenStateIdle = NO;
+    [self stopMonitoringScreenChanges];
+}
+
 - (void)stopMonitoringScreenChanges {
     // Screensaver events are _distributed_ notification events
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)screenStateIdle:(BOOL)state
+{
+    if (state) {
+        [self activateScreenSateIdle];
+    } else {
+        [self disableScreenSateIdle];
+    }
 }
 
 #pragma mark - dealloc

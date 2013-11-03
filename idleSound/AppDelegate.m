@@ -20,6 +20,7 @@
 @property (assign, nonatomic) BOOL wasMutedBefore;
 @property (strong, nonatomic) NSMenuItem *activeMenuItem;
 @property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
+@property (weak) IBOutlet NSMenuItem *screenStateMenuItem;
 
 // outlets
 @property (weak) IBOutlet NSMenu *statusItemMenu;
@@ -29,16 +30,19 @@
 
 @implementation AppDelegate
 
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-//    http://stackoverflow.com/a/8401132/1953914
-//    In application xib, select the window object, and you will see "Visible at Launch" in Attributes Inspector.
-    _window.isVisible = NO;
-}
+#define kSettingsFade @"org.loessl.idleSound.settings.fade"
+#define kSettingsScreenState @"org.loessl.idleSound.settings.screenState"
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    BOOL screenStateIdle = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingsScreenState];
+    
     self.idleManager = [[IdleManager alloc] init];
+    [self.idleManager screenStateIdle:screenStateIdle];
+    screenStateIdle ? [self.screenStateMenuItem setState:NSOnState] : [self.screenStateMenuItem setState:NSOffState];
+    
     [self thirty:self.thirtyMenuItem];
+    
     [self setupMenuBarItem];
     [self registerObserver];
     [self language];
@@ -162,5 +166,23 @@
     [self.activeMenuItem setState:NSOffState];
     self.activeMenuItem = sender;
 }
+
+#pragma mark - settings
+
+- (IBAction)screenStateMenuItem:(NSMenuItem *)sender
+{
+    if ([sender state]) {
+        [self.screenStateMenuItem setState:NSOffState];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kSettingsScreenState];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.idleManager disableScreenSateIdle];
+    } else {
+        [self.screenStateMenuItem setState:NSOnState];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSettingsScreenState];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.idleManager activateScreenSateIdle];
+    }
+}
+
 
 @end

@@ -660,6 +660,7 @@
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="quit" destination="rPT-EG-XLy" id="kgc-wE-ibQ"/>
+                <outlet property="screenStateMenuItem" destination="RJS-LQ-2Ai" id="yD1-Vy-jiV"/>
                 <outlet property="statusItemMenu" destination="Wee-vz-hS2" id="YdL-lW-tJR"/>
                 <outlet property="thirtyMenuItem" destination="xY7-dc-FLu" id="QnP-tc-fYq"/>
                 <outlet property="window" destination="371" id="532"/>
@@ -692,10 +693,18 @@
                         <action selector="five:" target="494" id="YiH-Lv-RSk"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="DrW-oa-Eif"/>
                 <menuItem title="Off" id="tcc-Hu-CP4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="noTime:" target="494" id="FTe-sw-3Qs"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="LMe-77-00t"/>
+                <menuItem title="ScreenState" id="RJS-LQ-2Ai">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="screenStateMenuItem:" target="494" id="GAq-EU-KOK"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Q0O-df-VNR"/>
