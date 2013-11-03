@@ -694,7 +694,7 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="DrW-oa-Eif"/>
-                <menuItem title="Off" id="tcc-Hu-CP4">
+                <menuItem title="Ignore idle" id="tcc-Hu-CP4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="noTime:" target="494" id="FTe-sw-3Qs"/>

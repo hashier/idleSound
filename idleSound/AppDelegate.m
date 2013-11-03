@@ -30,22 +30,29 @@
 
 @implementation AppDelegate
 
+#define kSettingsIdleTime @"org.loessl.idleSound.settings.idleTime"
 #define kSettingsFade @"org.loessl.idleSound.settings.fade"
 #define kSettingsScreenState @"org.loessl.idleSound.settings.screenState"
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    BOOL screenStateIdle = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingsScreenState];
-    
     self.idleManager = [[IdleManager alloc] init];
-    [self.idleManager screenStateIdle:screenStateIdle];
-    screenStateIdle ? [self.screenStateMenuItem setState:NSOnState] : [self.screenStateMenuItem setState:NSOffState];
-    
-    [self thirty:self.thirtyMenuItem];
     
     [self setupMenuBarItem];
+    [self settings];
     [self registerObserver];
     [self language];
+}
+
+- (void)settings
+{
+    // time
+    [self thirty:self.thirtyMenuItem];
+    
+    // screen state
+    BOOL screenStateIdle = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingsScreenState];
+    [self.idleManager screenStateIdle:screenStateIdle];
+    screenStateIdle ? [self.screenStateMenuItem setState:NSOnState] : [self.screenStateMenuItem setState:NSOffState];
 }
 
 #pragma mark - Layout
@@ -134,40 +141,35 @@
 
 - (IBAction)sixty:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 3600;
-    [sender setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = sender;
+    [self changeActiveTo:sender];
 }
 
 - (IBAction)thirty:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 1800;
-    [sender setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = sender;
+    [self changeActiveTo:sender];
 }
 
 - (IBAction)fifteen:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 900;
-    [sender setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = sender;
+    [self changeActiveTo:sender];
 }
 
 - (IBAction)five:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 300;
-    [sender setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = sender;
+    [self changeActiveTo:sender];
 }
 
 - (IBAction)noTime:(NSMenuItem *)sender {
-    [self.idleManager stopMonitoringScreenChanges];
-    [sender setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = sender;
+    self.idleManager.machineIdleThreshold = 0;
+    [self changeActiveTo:sender];
 }
 
-#pragma mark - settings
+- (void)changeActiveTo:(NSMenuItem *)newItem
+{
+    [newItem setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = newItem;
+}
 
 - (IBAction)screenStateMenuItem:(NSMenuItem *)sender
 {
@@ -183,6 +185,5 @@
         [self.idleManager activateScreenSateIdle];
     }
 }
-
 
 @end

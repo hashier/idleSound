@@ -120,6 +120,7 @@
     
     // Update our timer interval for either idle or active polling
     [self.idleTimer invalidate];
+    if (self.machineIdleThreshold == 0) return;
     self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
                                                       target:self
                                                     selector:@selector(idleCheckTimer:)
