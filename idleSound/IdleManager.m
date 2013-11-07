@@ -11,6 +11,7 @@
 
 #import "IdleManager.h"
 #import "Notifications.h"
+#import "common.h"
 
 #define MACHINE_IDLE_THRESHOLD          1800    // 1800 seconds of inactivity is considered idle
 #define MACHINE_ACTIVE_POLL_INTERVAL      30    // Poll every 30 seconds when the user is active
@@ -109,6 +110,8 @@
  */
 - (void)setMachineIsIdle:(BOOL)inIdle
 {
+    DLog(inIdle ? @"setMachineIsIdle: Yes" : @"setMachineIsIdle: No");
+    
     _machineIsIdle = inIdle;
     
     //Post the appropriate idle or active notification
@@ -166,6 +169,8 @@
 - (void)screenStateDidChange:(NSNotification *)notification {
     NSString *notificationName = [notification name];
     
+    DLog(@"screnStateDidChange: %@", notificationName);
+    
     if ([notificationName isEqualToString:AIScreensaverDidStartNotification]) {
         self.machineIsIdle = YES;
     } else if ([notificationName isEqualToString:AIScreensaverDidStopNotification]) {
@@ -177,6 +182,7 @@
     }
 }
 
+// private
 - (void)monitorScreenChanges {
     // Register our notifications
     NSNotificationCenter *notificationCenter;
@@ -204,15 +210,22 @@
                                name:AIScreenLockDidStopNotification
                              object:nil];
 
-#ifdef DEBUG
-    // observ ALL notifications
-    [notificationCenter addObserver:self
-                           selector:@selector(observerMethod:)
-                               name:nil
-                             object:nil];
-#endif
+//#ifdef DEBUG
+//    // observ ALL notifications
+//    [notificationCenter addObserver:self
+//                           selector:@selector(observerMethod:)
+//                               name:nil
+//                             object:nil];
+//#endif
 }
 
+// private
+- (void)stopMonitoringScreenChanges {
+    // Screensaver events are _distributed_ notification events
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// private
 - (void)activateScreenSateIdle
 {
     self.screenStateIdle = YES;
@@ -220,15 +233,11 @@
     [self monitorScreenChanges];
 }
 
+// private
 - (void)disableScreenSateIdle
 {
     self.screenStateIdle = NO;
     [self stopMonitoringScreenChanges];
-}
-
-- (void)stopMonitoringScreenChanges {
-    // Screensaver events are _distributed_ notification events
-    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)screenStateIdle:(BOOL)state
@@ -248,11 +257,11 @@
 
 #pragma mark - DEBUG
 
-#ifdef DEBUG
-- (void)observerMethod:(NSNotification *)notification
-{
-    NSLog(@"%@",[notification name]);
-}
-#endif
+//#ifdef DEBUG
+//- (void)observerMethod:(NSNotification *)notification
+//{
+//    NSLog(@"%@",[notification name]);
+//}
+//#endif
 
 @end

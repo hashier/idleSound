@@ -20,10 +20,6 @@
 - (id)init;
 - (void)disable;
 - (void)enable;
-- (void)monitorScreenChanges;
-- (void)stopMonitoringScreenChanges;
-- (void)activateScreenSateIdle;
-- (void)disableScreenSateIdle;
 - (void)screenStateIdle:(BOOL)state;
 
 @end

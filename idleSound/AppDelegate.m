@@ -177,12 +177,12 @@
         [self.screenStateMenuItem setState:NSOffState];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kSettingsScreenState];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.idleManager disableScreenSateIdle];
+        [self.idleManager screenStateIdle:NO];
     } else {
         [self.screenStateMenuItem setState:NSOnState];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSettingsScreenState];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.idleManager activateScreenSateIdle];
+        [self.idleManager screenStateIdle:YES];
     }
 }
 
