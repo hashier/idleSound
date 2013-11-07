@@ -142,8 +142,6 @@
 - (void)enable
 {
     if (self.screenStateIdle) {
-        // make sure that every event gets only observed once
-        [self stopMonitoringScreenChanges];
         [self monitorScreenChanges];
     }
     self.machineIsIdle = NO;
@@ -184,11 +182,16 @@
 
 // private
 - (void)monitorScreenChanges {
+    // remove all first, so we won't listen double on notifications
+    [self stopMonitoringScreenChanges];
+    
     // Register our notifications
     NSNotificationCenter *notificationCenter;
     
     // Screensaver events are _distributed_ notification events
     notificationCenter = [NSDistributedNotificationCenter defaultCenter];
+    
+    DLog(@"Register on screen state changes in [NSDistributedNotificationCenter defaultCenter]");
     
     [notificationCenter addObserver:self
                            selector:@selector(screenStateDidChange:)
@@ -221,31 +224,19 @@
 
 // private
 - (void)stopMonitoringScreenChanges {
+    DLog(@"Deregister everything in [NSDistributedNotificationCenter defaultCenter]");
     // Screensaver events are _distributed_ notification events
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
-}
-
-// private
-- (void)activateScreenSateIdle
-{
-    self.screenStateIdle = YES;
-    [self stopMonitoringScreenChanges];
-    [self monitorScreenChanges];
-}
-
-// private
-- (void)disableScreenSateIdle
-{
-    self.screenStateIdle = NO;
-    [self stopMonitoringScreenChanges];
 }
 
 - (void)screenStateIdle:(BOOL)state
 {
     if (state) {
-        [self activateScreenSateIdle];
+        self.screenStateIdle = YES;
+        [self monitorScreenChanges];
     } else {
-        [self disableScreenSateIdle];
+        self.screenStateIdle = NO;
+        [self stopMonitoringScreenChanges];
     }
 }
 
