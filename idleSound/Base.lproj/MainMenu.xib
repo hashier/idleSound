@@ -693,7 +693,6 @@
                         <action selector="five:" target="494" id="YiH-Lv-RSk"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="DrW-oa-Eif"/>
                 <menuItem title="Ignore idle" id="tcc-Hu-CP4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
