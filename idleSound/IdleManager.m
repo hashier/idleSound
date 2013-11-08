@@ -37,7 +37,7 @@
 @implementation IdleManager
 
 /*!
- * @brief Initialize
+ * @brief Initialise
  */
 - (id)init {
     if (self = [super init]) {
@@ -58,13 +58,26 @@
  */
 - (CFTimeInterval)currentMachineIdle
 {
-    return CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGAnyInputEventType);
+    CFTimeInterval smallestIdleTime;
+    CFTimeInterval tmp;
+    
+    tmp = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventKeyDown);
+    smallestIdleTime = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventMouseMoved);
+    if (tmp < smallestIdleTime) {
+        smallestIdleTime = tmp;
+    }
+    tmp = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventFlagsChanged);
+    if (tmp < smallestIdleTime) {
+        smallestIdleTime = tmp;
+    }
+    
+    return smallestIdleTime;
 }
 
 /*!
- * @brief Timer that checkes for machine idle
+ * @brief Timer that checks for machine idle
  *
- * This timer periodically checks the machine for inactivity.  When the machine has been inactive for atleast
+ * This timer periodically checks the machine for inactivity.  When the machine has been inactive for at least
  * machineIdleThreshold seconds, a notification is broadcast.
  *
  * When the machine is active, this timer is called infrequently.  It's not important to notice that the user went
@@ -216,7 +229,7 @@
                              object:nil];
 
 //#ifdef DEBUG
-//    // observ ALL notifications
+//    // observe ALL notifications
 //    [notificationCenter addObserver:self
 //                           selector:@selector(observerMethod:)
 //                               name:nil
