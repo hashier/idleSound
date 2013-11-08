@@ -76,6 +76,8 @@
 - (void)idleCheckTimer:(NSTimer *)inTimer {
     CFTimeInterval currentIdle = [self currentMachineIdle];
     
+    DLog(@"Current idle time: %f", currentIdle);
+    
     if (self.machineIsIdle) {
         if (currentIdle < self.lastSeenIdle) {
             // User came back
