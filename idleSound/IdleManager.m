@@ -89,7 +89,10 @@
 - (void)idleCheckTimer:(NSTimer *)inTimer {
     CFTimeInterval currentIdle = [self currentMachineIdle];
     
-    DLog(@"Current idle time: %f", currentIdle);
+    // don't print to much debugging information
+    if (currentIdle < self.machineIdleThreshold || (int)currentIdle % 1000 == 0) {
+        DLog(@"Current idle time: %f", currentIdle);
+    }
     
     if (self.machineIsIdle) {
         if (currentIdle < self.lastSeenIdle) {
@@ -127,6 +130,15 @@
 {
     DLog(inIdle ? @"setMachineIsIdle: Yes" : @"setMachineIsIdle: No");
     
+    if (_machineIsIdle == inIdle) {
+        // we are already in the new state
+        // this happens e.g. the user locks the screen -> userIdle
+        // and then x minutes later this get's called again -> 2nd userIdle
+        // so we return on do nothing else
+        DLog(@"Reinvocation of the same state. Doing nothing. return.");
+        return;
+    }
+    
     _machineIsIdle = inIdle;
     
     //Post the appropriate idle or active notification
@@ -138,6 +150,7 @@
     
     // Update our timer interval for either idle or active polling
     [self.idleTimer invalidate];
+    // disable idleTimer but still have ScreenStates
     if (self.machineIdleThreshold == 0) return;
     self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
                                                       target:self
