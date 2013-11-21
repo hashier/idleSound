@@ -102,15 +102,11 @@
         if (!self.wasMutedBefore) {
             [HASVolumeControl mute];
         }
-    }
-    
-    // Updates every second
-	if ([notificationName isEqualToString:AIMachineIdleUpdateNotification]) {
+    } else if ([notificationName isEqualToString:AIMachineIdleUpdateNotification]) {
+        // Updates every second
 //        NSLog(@"Machine update timer");
-    }
-    
-    // End events
-	if ([notificationName isEqualToString:AIMachineIsActiveNotification]) {
+    } else if ([notificationName isEqualToString:AIMachineIsActiveNotification]) {
+        // End events
         if (!self.wasMutedBefore) {
             [HASVolumeControl unmute];
         }
