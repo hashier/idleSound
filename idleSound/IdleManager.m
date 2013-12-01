@@ -51,7 +51,7 @@
 /*!
  * @brief Returns the current machine idle time
  *
- * Returns the current number of seconds the machine has been idle.  The machine is idle when there are no input
+ * Returns the current number of seconds the machine has been idle. The machine is idle when there are no input
  * events from the user (such as mouse movement or keyboard input) or when the screen saver is active.
  * In addition to this method, the status controller sends out notifications when the machine becomes idle,
  * stays idle, and returns to an active state.
@@ -61,8 +61,8 @@
     CFTimeInterval smallestIdleTime;
     CFTimeInterval tmp;
     
-    tmp = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventKeyDown);
-    smallestIdleTime = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventMouseMoved);
+    smallestIdleTime = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventKeyDown);
+    tmp = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventMouseMoved);
     if (tmp < smallestIdleTime) {
         smallestIdleTime = tmp;
     }
