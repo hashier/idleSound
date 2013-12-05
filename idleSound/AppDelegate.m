@@ -19,12 +19,13 @@
 @property (strong, nonatomic) NSStatusItem* statusItem;
 @property (assign, nonatomic) BOOL wasMutedBefore;
 @property (strong, nonatomic) NSMenuItem *activeMenuItem;
-@property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
-@property (weak) IBOutlet NSMenuItem *screenStateMenuItem;
+@property (strong, nonatomic) NSProcessInfo *processInfo;
 
 // outlets
 @property (weak) IBOutlet NSMenu *statusItemMenu;
 @property (weak) IBOutlet NSMenuItem *quit;
+@property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
+@property (weak) IBOutlet NSMenuItem *screenStateMenuItem;
 
 @end
 
@@ -36,6 +37,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // enable sudden process termination
+    self.processInfo = [[NSProcessInfo alloc] init];
+    [self.processInfo enableSuddenTermination];
+    
     self.idleManager = [[IdleManager alloc] init];
     
     [self setupMenuBarItem];
