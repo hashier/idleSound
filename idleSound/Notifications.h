@@ -10,15 +10,15 @@
 #define idleSound_Notifications_h
 
 //Idle Notifications
-#define AIMachineIsIdleNotification				@"AIMachineIsIdleNotification"
-#define AIMachineIsActiveNotification			@"AIMachineIsActiveNotification"
-#define AIMachineIdleUpdateNotification			@"AIMachineIdleUpdateNotification"
+#define AIMachineIsIdleNotification             @"AIMachineIsIdleNotification"
+#define AIMachineIsActiveNotification           @"AIMachineIsActiveNotification"
+#define AIMachineIdleUpdateNotification         @"AIMachineIdleUpdateNotification"
 
-#define	AIScreensaverDidStartNotification		@"com.apple.screensaver.didstart"
-#define AIScreensaverDidStopNotification		@"com.apple.screensaver.didstop"
+#define AIScreensaverDidStartNotification       @"com.apple.screensaver.didstart"
+#define AIScreensaverDidStopNotification        @"com.apple.screensaver.didstop"
 
-#define AIScreenLockDidStartNotification		@"com.apple.screenIsLocked"
-#define AIScreenLockDidStopNotification			@"com.apple.screenIsUnlocked"
+#define AIScreenLockDidStartNotification        @"com.apple.screenIsLocked"
+#define AIScreenLockDidStopNotification         @"com.apple.screenIsUnlocked"
 
 #define kIdleFor                                @"kIdleFor"
 #define kIdleSince                              @"kIdleSince"
