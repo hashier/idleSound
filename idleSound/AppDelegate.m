@@ -36,6 +36,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    DLog(@"Version: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]);
     // enable sudden process termination
     [[NSProcessInfo processInfo] enableSuddenTermination];
     

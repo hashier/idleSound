@@ -91,10 +91,15 @@
     
     // don't print to much debugging information
     if (currentIdle < self.machineIdleThreshold || (int)currentIdle % 1000 == 0) {
-        DLog(@"Current idle time: %f", currentIdle);
+        DLog(@"Current idle time  : %f", currentIdle);
+        DLog(@"Last Seen idle time: %f", self.lastSeenIdle);
     }
     
     if (self.machineIsIdle) {
+        // If the user has some idle time saved and then looks screen
+        // then the oldIdle time is > newIdle time
+        // which leads to "user came back"
+        // so we set lastSeenIdle to 0 when the screen gets locked
         if (currentIdle < self.lastSeenIdle) {
             // User came back
             self.machineIsIdle = NO;
@@ -130,11 +135,20 @@
 {
     DLog(inIdle ? @"setMachineIsIdle: Yes" : @"setMachineIsIdle: No");
     
-    if (_machineIsIdle == inIdle) {
+    if ( (_machineIsIdle == inIdle) && (self.idleTimer) ){
         // we are already in the new state
         // this happens e.g. the user locks the screen -> userIdle
         // and then x minutes later this get's called again -> 2nd userIdle
-        // so we return on do nothing else
+        // so we return and do nothing else
+        //
+        // Otherwise the problem is, that the "old" state is not actually the old state
+        // e.g
+        // we are active with sound, then we lock the screen
+        // we save "sound on" as old state, then 30min later the user becomes inactive
+        // we run the same function again and since we are already "sound off"
+        // we save "sound off" als old state and when we become active again
+        // we don't restore the sound.
+        // hence, don't do it twice.
         DLog(@"Reinvocation of the same state. Doing nothing. return.");
         return;
     }
@@ -150,6 +164,7 @@
     
     // Update our timer interval for either idle or active polling
     [self.idleTimer invalidate];
+    self.idleTimer = nil;
     // disable idleTimer but still have ScreenStates
     if (self.machineIdleThreshold == 0) return;
     self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
@@ -206,6 +221,8 @@
     } else if ([notificationName isEqualToString:AIScreenLockDidStopNotification]) {
         self.machineIsIdle = NO;
     }
+    
+    self.lastSeenIdle = 0.0;
 }
 
 // private
