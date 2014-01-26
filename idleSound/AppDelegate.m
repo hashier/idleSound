@@ -127,7 +127,7 @@
     NSString *appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString *appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *versionBuildString = [NSString stringWithFormat:@"Version: %@ (%@)", appVersionString, appBuildString];
-    NSString *msg = [NSString stringWithFormat:@"%@ %@ %@", @"idleSound\n\nidleSound is free and open source software which automatically mutes your Mac after a specified time.", @"\n\nCopyright (C) 2013 Christopher Loessl\n\n", versionBuildString];
+    NSString *msg = [NSString stringWithFormat:@"%@ %@ %@", @"idleSound\n\nidleSound is free and open source software which automatically mutes your Mac after a specified time.\n\nYou can set the idle time after which the Mac should be muted.\nWith the ScreenState setting you can decide whether ScreenSleep and ScreenSaver should mute the Mac as well.", @"\n\nCopyright (C) 2013 Christopher Loessl\n\n", versionBuildString];
     NSAlert *alert = [NSAlert alertWithMessageText:msg
                                      defaultButton:@"Close"
                                    alternateButton:@"Source Code and Bugtracker"

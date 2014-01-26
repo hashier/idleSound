@@ -12,7 +12,15 @@ You can download the app [here](https://github.com/hashier/idleSound/releases), 
 
 Screen Shot
 ===========
+
 ![Screen Shot](https://raw.github.com/hashier/idleSound/master/ScreenShot.png)
+
+
+
+Features and Settings
+=====================
+
+You can set the idle time after which the Mac should be muted further you can chose whether the Mac should be muted when the screens turn off or the screensaver starts. Both settings can be disabled through the menu bar.
 
 
 Known issues
