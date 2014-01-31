@@ -8,9 +8,9 @@ Automatically mute your Mac when it becomes idle.
 You can download the app [here](https://github.com/hashier/idleSound/releases), or get the source from github and build it yourself.
 
 
-## Screen Shot
+## Screenshot
 
-![Screen Shot](https://raw.github.com/hashier/idleSound/master/ScreenShot.png)
+![Screenshot](https://raw.github.com/hashier/idleSound/master/images/Screenshot.png)
 
 
 ## Features and Settings
