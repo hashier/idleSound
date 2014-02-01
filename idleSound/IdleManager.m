@@ -90,7 +90,7 @@
     CFTimeInterval currentIdle = [self currentMachineIdle];
     
     // don't print to much debugging information
-    if (currentIdle < self.machineIdleThreshold || (int)currentIdle % 1000 == 0) {
+    if (currentIdle < 300 || (int)currentIdle % 600 == 0) {
         DLog(@"Current idle time  : %f", currentIdle);
         DLog(@"Last Seen idle time: %f", self.lastSeenIdle);
     }
