@@ -1,11 +1,11 @@
 # idleSound
 
-Automatically mute your Mac when it becomes idle.
+Automatically mute your Mac when it becomes idle or your screen locks. Idle time as well as the screen-lock/screen-saver are individually adjustable.
 
 
 ## Download
 
-You can download the app [here](https://github.com/hashier/idleSound/releases), or get the source from github and build it yourself.
+You can download the app [here](https://github.com/hashier/idleSound/releases), or get the source from GitHub and build it yourself.
 
 
 ## Screenshot
@@ -15,7 +15,7 @@ You can download the app [here](https://github.com/hashier/idleSound/releases), 
 
 ## Features and Settings
 
-You can set the idle time after which the Mac should be muted further you can chose whether the Mac should be muted when the screens turn off or the screensaver starts. Both settings can be disabled through the menu bar.
+You can set the idle time after which the Mac should be muted further you can chose whether the Mac should be muted when the screens turn off or the screen-saver starts. Both settings can be disabled through the menu bar. More information can be found in the "about" dialog box which is accessible through the menu-bar.
 
 
 ## Known issues
@@ -26,4 +26,3 @@ Doesn't work well together with `Caffeine` this is because `Caffeine` fakes user
 ## License
 
 Licensed under the terms of the GNU General Public License version 3.
-
