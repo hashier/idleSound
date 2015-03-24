@@ -10,7 +10,7 @@
 
 @interface HASVolumeControl : NSObject
 
-+ (float)volume;
++ (Float32)volume;
 + (void)setVolume:(Float32)newVolume;
 + (bool)isMuted;
 + (void)mute;

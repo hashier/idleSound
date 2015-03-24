@@ -96,7 +96,7 @@
 }
 
 // getting system volume
-+ (float)volume {
++ (Float32)volume {
     OSStatus status = noErr;
     
     AudioDeviceID outputDeviceID = [[self class] defaultOutputDeviceID];
