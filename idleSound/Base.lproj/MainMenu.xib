@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
                 <menuItem title="idleSound" id="56">
@@ -651,7 +651,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -659,8 +659,12 @@
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="fiftenMenuItem" destination="zsF-bR-Th3" id="n0w-pv-IuG"/>
+                <outlet property="fiveMenuItem" destination="08B-MK-lvL" id="CCk-03-26x"/>
+                <outlet property="ignoreMenuItem" destination="tcc-Hu-CP4" id="yDD-XT-0jo"/>
                 <outlet property="quit" destination="rPT-EG-XLy" id="kgc-wE-ibQ"/>
                 <outlet property="screenStateMenuItem" destination="RJS-LQ-2Ai" id="yD1-Vy-jiV"/>
+                <outlet property="sixtyMenuItem" destination="9pP-sA-SKz" id="i0q-pK-56C"/>
                 <outlet property="statusItemMenu" destination="Wee-vz-hS2" id="YdL-lW-tJR"/>
                 <outlet property="thirtyMenuItem" destination="xY7-dc-FLu" id="QnP-tc-fYq"/>
                 <outlet property="window" destination="371" id="532"/>

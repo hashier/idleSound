@@ -14,7 +14,7 @@
 @interface IdleManager : NSObject
 
 // properties
-@property (assign, nonatomic) NSUInteger machineIdleThreshold; // default 30min
+@property (assign, nonatomic) NSInteger machineIdleThreshold; // default 30min
 
 // public methods
 - (id)init;

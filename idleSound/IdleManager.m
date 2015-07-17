@@ -108,10 +108,8 @@
             // Periodically broadcast a 'MachineIdleUpdate' notification
             [[NSNotificationCenter defaultCenter] postNotificationName:AIMachineIdleUpdateNotification
                                                                 object:nil
-                                                              userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                        [NSNumber numberWithDouble:currentIdle], kIdleFor,
-                                                                        [NSDate dateWithTimeIntervalSinceNow:-currentIdle], kIdleSince,
-                                                                        nil]];
+                                                              userInfo:@{kIdleFor : @(currentIdle),
+                                                                         kIdleSince : [NSDate dateWithTimeIntervalSinceNow:-currentIdle]}];
         }
     } else {
         // User went idle
@@ -165,8 +163,10 @@
     // Update our timer interval for either idle or active polling
     [self.idleTimer invalidate];
     self.idleTimer = nil;
+    
     // disable idleTimer but still have ScreenStates
     if (self.machineIdleThreshold == 0) return;
+    
     self.idleTimer = [NSTimer scheduledTimerWithTimeInterval:(_machineIsIdle ? MACHINE_IDLE_POLL_INTERVAL : MACHINE_ACTIVE_POLL_INTERVAL)
                                                       target:self
                                                     selector:@selector(idleCheckTimer:)
@@ -190,7 +190,7 @@
     self.machineIsIdle = NO;
 }
 
-- (void)setMachineIdleThreshold:(NSUInteger)machineIdleThreshold
+- (void)setMachineIdleThreshold:(NSInteger)machineIdleThreshold
 {
     _machineIdleThreshold = machineIdleThreshold;
     

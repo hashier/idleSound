@@ -21,6 +21,7 @@
 		00CAD4F518070FC1006EA60E /* idleSoundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CAD4F418070FC1006EA60E /* idleSoundTests.m */; };
 		00E2F4D6180B260800C73397 /* HASVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E2F4D5180B260800C73397 /* HASVolumeControl.m */; };
 		00E2F4D8180B2E4300C73397 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00E2F4D7180B2E4300C73397 /* AudioToolbox.framework */; };
+		CEF9126E1B59B1AE0096E3BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF9126C1B59B1AE0096E3BF /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		00E2F4D4180B260800C73397 /* HASVolumeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HASVolumeControl.h; sourceTree = "<group>"; };
 		00E2F4D5180B260800C73397 /* HASVolumeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HASVolumeControl.m; sourceTree = "<group>"; };
 		00E2F4D7180B2E4300C73397 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CEF912711B59B2560096E3BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 		00CAD4D118070FC1006EA60E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEF9126C1B59B1AE0096E3BF /* Localizable.strings */,
 				00A51FFD180B37E10051E0C8 /* Notifications.h */,
 				00A51FFE180B384E0051E0C8 /* common.h */,
 				00CAD4D218070FC1006EA60E /* idleSound-Info.plist */,
@@ -249,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF9126E1B59B1AE0096E3BF /* Localizable.strings in Resources */,
 				00CAD4D518070FC1006EA60E /* InfoPlist.strings in Resources */,
 				00CAD4E318070FC1006EA60E /* Images.xcassets in Resources */,
 				00CAD4DB18070FC1006EA60E /* Credits.rtf in Resources */,
@@ -344,6 +348,14 @@
 				00CAD4F218070FC1006EA60E /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CEF9126C1B59B1AE0096E3BF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEF912711B59B2560096E3BF /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

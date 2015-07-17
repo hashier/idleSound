@@ -23,15 +23,18 @@
 // outlets
 @property (weak) IBOutlet NSMenu *statusItemMenu;
 @property (weak) IBOutlet NSMenuItem *quit;
-@property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
 @property (weak) IBOutlet NSMenuItem *screenStateMenuItem;
+@property (weak) IBOutlet NSMenuItem *sixtyMenuItem;
+@property (weak) IBOutlet NSMenuItem *thirtyMenuItem;
+@property (weak) IBOutlet NSMenuItem *fiftenMenuItem;
+@property (weak) IBOutlet NSMenuItem *fiveMenuItem;
+@property (weak) IBOutlet NSMenuItem *ignoreMenuItem;
 
 @end
 
 @implementation AppDelegate
 
-#define kSettingsIdleTime @"org.loessl.idleSound.settings.idleTime"
-#define kSettingsFade @"org.loessl.idleSound.settings.fade"
+#define kSettingsTime @"org.loessl.idleSound.settings.time"
 #define kSettingsScreenState @"org.loessl.idleSound.settings.screenState"
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -43,20 +46,9 @@
     self.idleManager = [[IdleManager alloc] init];
     
     [self setupMenuBarItem];
-    [self settings];
+    [self loadSettings];
     [self registerObserver];
     [self language];
-}
-
-- (void)settings
-{
-    // time
-    [self thirty:self.thirtyMenuItem];
-    
-    // screen state
-    BOOL screenStateIdle = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingsScreenState];
-    [self.idleManager screenStateIdle:screenStateIdle];
-    screenStateIdle ? [self.screenStateMenuItem setState:NSOnState] : [self.screenStateMenuItem setState:NSOffState];
 }
 
 #pragma mark - Layout
@@ -64,15 +56,15 @@
 - (void)setupMenuBarItem {
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     self.statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    [self.statusItem setTitle:NSLocalizedString(@"S", @"Title of idleSound")];
-    [self.statusItem setMenu:self.statusItemMenu];
-    [self.statusItem setHighlightMode:YES];
+    self.statusItem.menu = self.statusItemMenu;
+    self.statusItem.highlightMode = YES;
 }
 
 #pragma mark - Translations
 
 - (void)language {
     self.quit.title = NSLocalizedString(@"Quit", @"Click to quit the app");
+    self.statusItem.title = NSLocalizedString(@"S", @"Title of idleSound");
 }
 
 #pragma mark - Notification
@@ -117,7 +109,7 @@
     }
 }
 
-#pragma mark - MenuItems
+#pragma mark - Getter Setter
 
 - (IBAction)quit:(id)sender {
     [NSApp terminate:self];
@@ -141,34 +133,32 @@
 
 - (IBAction)sixty:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 3600;
+    [self saveThreshold:3600];
     [self changeActiveTo:sender];
 }
 
 - (IBAction)thirty:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 1800;
+    [self saveThreshold:1800];
     [self changeActiveTo:sender];
 }
 
 - (IBAction)fifteen:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 900;
+    [self saveThreshold:900];
     [self changeActiveTo:sender];
 }
 
 - (IBAction)five:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 300;
+    [self saveThreshold:300];
     [self changeActiveTo:sender];
 }
 
 - (IBAction)noTime:(NSMenuItem *)sender {
     self.idleManager.machineIdleThreshold = 0;
+    [self saveThreshold:0];
     [self changeActiveTo:sender];
-}
-
-- (void)changeActiveTo:(NSMenuItem *)newItem
-{
-    [newItem setState:NSOnState];
-    [self.activeMenuItem setState:NSOffState];
-    self.activeMenuItem = newItem;
 }
 
 - (IBAction)screenStateMenuItem:(NSMenuItem *)sender
@@ -184,6 +174,56 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.idleManager screenStateIdle:YES];
     }
+}
+
+#pragma mark Helper
+
+- (void)changeActiveTo:(NSMenuItem *)newItem
+{
+    [newItem setState:NSOnState];
+    [self.activeMenuItem setState:NSOffState];
+    self.activeMenuItem = newItem;
+}
+
+- (void)saveThreshold:(NSInteger)threshold
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:threshold forKey:kSettingsTime];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)loadSettings
+{
+    NSMenuItem *settingActivate;
+    
+    // screen state
+    BOOL screenStateIdle = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingsScreenState];
+    [self.idleManager screenStateIdle:screenStateIdle];
+    screenStateIdle ? [self.screenStateMenuItem setState:NSOnState] : [self.screenStateMenuItem setState:NSOffState];
+    
+    // idle time
+    NSInteger timeIdle = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingsTime];
+    self.idleManager.machineIdleThreshold = timeIdle;
+    switch (timeIdle) {
+        case 0:
+            settingActivate = self.ignoreMenuItem;
+            break;
+        case 300:
+            settingActivate = self.fiveMenuItem;
+            break;
+        case 900:
+            settingActivate = self.fiftenMenuItem;
+            break;
+        case 1800:
+            settingActivate = self.thirtyMenuItem;
+            break;
+        case 3600:
+            settingActivate = self.sixtyMenuItem;
+            break;
+        default:
+            NSLog(@"Error: Case not handled. Setting threshold");
+            break;
+    }
+    [self changeActiveTo:settingActivate];
 }
 
 @end
