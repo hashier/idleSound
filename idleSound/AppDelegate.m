@@ -12,6 +12,14 @@
 #import "Notifications.h"
 #import "IdleManager.h"
 
+typedef NS_ENUM(NSInteger, IdleThresholdTime) {
+    IdleThresholdTime0 = 0,
+    IdleThresholdTime300 = 300,
+    IdleThresholdTime900 = 900,
+    IdleThresholdTime1800 = 1800,
+    IdleThresholdTime3600 = 3600
+};
+
 @interface AppDelegate ()
 
 // properties
@@ -131,33 +139,38 @@
     }
 }
 
-- (IBAction)sixty:(NSMenuItem *)sender {
-    self.idleManager.machineIdleThreshold = 3600;
-    [self saveThreshold:3600];
+- (IBAction)sixty:(NSMenuItem *)sender
+{
+    self.idleManager.machineIdleThreshold = IdleThresholdTime3600;
+    [self saveThreshold:IdleThresholdTime3600];
     [self changeActiveTo:sender];
 }
 
-- (IBAction)thirty:(NSMenuItem *)sender {
-    self.idleManager.machineIdleThreshold = 1800;
-    [self saveThreshold:1800];
+- (IBAction)thirty:(NSMenuItem *)sender
+{
+    self.idleManager.machineIdleThreshold = IdleThresholdTime1800;
+    [self saveThreshold:IdleThresholdTime1800];
     [self changeActiveTo:sender];
 }
 
-- (IBAction)fifteen:(NSMenuItem *)sender {
-    self.idleManager.machineIdleThreshold = 900;
-    [self saveThreshold:900];
+- (IBAction)fifteen:(NSMenuItem *)sender
+{
+    self.idleManager.machineIdleThreshold = IdleThresholdTime900;
+    [self saveThreshold:IdleThresholdTime900];
     [self changeActiveTo:sender];
 }
 
-- (IBAction)five:(NSMenuItem *)sender {
-    self.idleManager.machineIdleThreshold = 300;
-    [self saveThreshold:300];
+- (IBAction)five:(NSMenuItem *)sender
+{
+    self.idleManager.machineIdleThreshold = IdleThresholdTime300;
+    [self saveThreshold:IdleThresholdTime300];
     [self changeActiveTo:sender];
 }
 
-- (IBAction)noTime:(NSMenuItem *)sender {
-    self.idleManager.machineIdleThreshold = 0;
-    [self saveThreshold:0];
+- (IBAction)noTime:(NSMenuItem *)sender
+{
+    self.idleManager.machineIdleThreshold = IdleThresholdTime0;
+    [self saveThreshold:IdleThresholdTime0];
     [self changeActiveTo:sender];
 }
 
@@ -204,19 +217,19 @@
     NSInteger timeIdle = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingsTime];
     self.idleManager.machineIdleThreshold = timeIdle;
     switch (timeIdle) {
-        case 0:
+        case IdleThresholdTime0:
             settingActivate = self.ignoreMenuItem;
             break;
-        case 300:
+        case IdleThresholdTime300:
             settingActivate = self.fiveMenuItem;
             break;
-        case 900:
+        case IdleThresholdTime900:
             settingActivate = self.fiftenMenuItem;
             break;
-        case 1800:
+        case IdleThresholdTime1800:
             settingActivate = self.thirtyMenuItem;
             break;
-        case 3600:
+        case IdleThresholdTime3600:
             settingActivate = self.sixtyMenuItem;
             break;
         default:
