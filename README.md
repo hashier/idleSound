@@ -18,9 +18,9 @@ You can download the app [here](https://github.com/hashier/idleSound/releases), 
 You can set the idle time after which the Mac should be muted further you can chose whether the Mac should be muted when the screens turn off or the screen-saver starts. Both settings can be disabled through the menu bar. More information can be found in the "about" dialog box which is accessible through the menu-bar.
 
 
-## Known issues
+## Known "issues"
 
-Doesn't work well together with `Caffeine` this is because `Caffeine` fakes user activity instead of doing it the right way and setting hooks in the system. A tool that sets system hooks instead of faking user activity is [iCanSleep](http://www.koboldtouch.com/display/ICS/iCanSleep+-+Prevent+your+Mac+from+Sleeping).
+Doesn't work well together with Caffeine this is because Caffeine fakes user activity instead of doing it the right way and setting hooks in the system. A tool that sets system hooks instead of faking user activity are [Amphetamine (iTunes link)](https://geo.itunes.apple.com/app/amphetamine/id937984704?mt=12&at=11l4L8) or [iCanSleep](http://www.koboldtouch.com/display/ICS/iCanSleep+-+Prevent+your+Mac+from+Sleeping).
 
 
 ## License
