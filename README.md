@@ -1,28 +1,27 @@
 # idleSound
 
-Automatically mute your Mac when it becomes idle or your screen locks. Idle time as well as the screen-lock/screen-saver are individually adjustable.
+Automatically mutes your Mac when it goes idle or the screen locks, so notification sounds and stray audio don't keep playing while you're away.
 
+A lightweight menu bar app — no dock icon, no window to manage.
+
+## Features
+
+- Mutes after a configurable idle timeout (off, 5, 15, 30, or 60 minutes)
+- Mutes when the screen locks or the screensaver starts
+- Both triggers can be toggled independently, right from the menu bar
 
 ## Download
 
-You can download the app [here](https://github.com/hashier/idleSound/releases), or get the source from GitHub and build it yourself.
-
+Grab a build from [Releases](https://github.com/hashier/idleSound/releases), or clone and build it yourself in Xcode.
 
 ## Screenshot
 
 ![Screenshot](https://raw.github.com/hashier/idleSound/master/images/Screenshot.png)
 
+## Known limitation
 
-## Features and Settings
-
-You can set the idle time after which the Mac should be muted further you can chose whether the Mac should be muted when the screens turn off or the screen-saver starts. Both settings can be disabled through the menu bar. More information can be found in the "about" dialog box which is accessible through the menu-bar.
-
-
-## Known "issues"
-
-Doesn't work well together with Caffeine this is because Caffeine fakes user activity instead of doing it the right way and setting hooks in the system. A tool that sets system hooks instead of faking user activity are [Amphetamine (iTunes link)](https://geo.itunes.apple.com/app/amphetamine/id937984704?mt=12&at=11l4L8) or [iCanSleep](http://www.koboldtouch.com/display/ICS/iCanSleep+-+Prevent+your+Mac+from+Sleeping).
-
+Doesn't play well with [Caffeine](https://intelliscapesolutions.com/apps/caffeine) — Caffeine fakes user activity instead of registering with the system's idle hooks, so idleSound never sees the Mac as idle while it's running. [Amphetamine](https://geo.itunes.apple.com/app/amphetamine/id937984704?mt=12&at=11l4L8) and [iCanSleep](http://www.koboldtouch.com/display/ICS/iCanSleep+-+Prevent+your+Mac+from+Sleeping) use real system hooks instead and don't have this problem.
 
 ## License
 
-Licensed under the terms of the GNU General Public License version 3.
+GNU General Public License v3.
